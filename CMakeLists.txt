@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( faceblur )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( faceblur faceblur.cpp )
+target_link_libraries( faceblur ${OpenCV_LIBS} )
