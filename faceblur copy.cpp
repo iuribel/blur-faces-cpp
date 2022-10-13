@@ -60,11 +60,11 @@ int main(int argc, const char** argv){
 			for (int h = 0; h < faces.size(); h++) {				
 		
 				rectangle(img, faces[h].tl(), faces[h].br(), Scalar(50, 50, 50), 3);
-				#pragma omp parallel for
-				for( int a=0;a<=20;a++){
-				//#pragma omp parallel for
+				
+				for( int a=0;a<=11;a++){
+					
 					for( int i = faces[h].x; i < faces[h].x + faces[h].width ; ++i) { 
-							//#pragma omp parallel for
+							
 							for( int j = faces[h].y; j < faces[h].y + faces[h].height; ++j) { 
 								int p0ul=img.at<Vec3b>(j-1 ,i-1).val[0];
 								int p0uc=img.at<Vec3b>(j-1 ,i).val[0];
