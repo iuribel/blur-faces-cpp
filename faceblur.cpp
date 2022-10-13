@@ -62,48 +62,54 @@ int main(int argc, const char** argv){
 				rectangle(img, faces[h].tl(), faces[h].br(), Scalar(50, 50, 50), 3);
 				
 				for( int a=0;a<=11;a++){
-					
-					for( int i = faces[h].x; i < faces[h].x + faces[h].width ; ++i) { 
-							
-							for( int j = faces[h].y; j < faces[h].y + faces[h].height; ++j) { 
-								int p0ul=img.at<Vec3b>(j-1 ,i-1).val[0];
-								int p0uc=img.at<Vec3b>(j-1 ,i).val[0];
-								int p0ur=img.at<Vec3b>(j-1 ,i+1).val[0];
-								int p0cl=img.at<Vec3b>(j ,i-1).val[0];
-								int p0cc=img.at<Vec3b>(j ,i).val[0];
-								int p0cr=img.at<Vec3b>(j ,i+1).val[0];
-								int p0dl=img.at<Vec3b>(j+1 ,i-1).val[0];
-								int p0dc=img.at<Vec3b>(j+1 ,i).val[0];
-								int p0dr=img.at<Vec3b>(j+1 ,i+1).val[0];
-								int cero=(p0ul+p0uc+p0ur+p0cl+p0cc+p0cr+p0dl+p0dc+p0dr)/9;
+					#pragma omp parallel default(shared)
+					{
+						#pragma omp for
+						for( int i = faces[h].x; i <= faces[h].x + faces[h].width ; ++i) { 
+							#pragma omp parallel shared(i, faces[h].x + faces[h].width)
+							{
+								#pragma omp for
+								for( int j = faces[h].y; j < faces[h].y + faces[h].height; ++j) { 
+									int p0ul=img.at<Vec3b>(j-1 ,i-1).val[0];
+									int p0uc=img.at<Vec3b>(j-1 ,i).val[0];
+									int p0ur=img.at<Vec3b>(j-1 ,i+1).val[0];
+									int p0cl=img.at<Vec3b>(j ,i-1).val[0];
+									int p0cc=img.at<Vec3b>(j ,i).val[0];
+									int p0cr=img.at<Vec3b>(j ,i+1).val[0];
+									int p0dl=img.at<Vec3b>(j+1 ,i-1).val[0];
+									int p0dc=img.at<Vec3b>(j+1 ,i).val[0];
+									int p0dr=img.at<Vec3b>(j+1 ,i+1).val[0];
+									int cero=(p0ul+p0uc+p0ur+p0cl+p0cc+p0cr+p0dl+p0dc+p0dr)/9;
 
-								int p1ul=img.at<Vec3b>(j-1 ,i-1).val[1];
-								int p1uc=img.at<Vec3b>(j-1 ,i).val[1];
-								int p1ur=img.at<Vec3b>(j-1 ,i+1).val[1];
-								int p1cl=img.at<Vec3b>(j ,i-1).val[1];
-								int p1cc=img.at<Vec3b>(j ,i).val[1];
-								int p1cr=img.at<Vec3b>(j ,i+1).val[1];
-								int p1dl=img.at<Vec3b>(j+1 ,i-1).val[1];
-								int p1dc=img.at<Vec3b>(j+1 ,i).val[1];
-								int p1dr=img.at<Vec3b>(j+1 ,i+1).val[1];
-								int uno=(p1ul+p1uc+p1ur+p1cl+p1cc+p1cr+p1dl+p1dc+p1dr)/9;
+									int p1ul=img.at<Vec3b>(j-1 ,i-1).val[1];
+									int p1uc=img.at<Vec3b>(j-1 ,i).val[1];
+									int p1ur=img.at<Vec3b>(j-1 ,i+1).val[1];
+									int p1cl=img.at<Vec3b>(j ,i-1).val[1];
+									int p1cc=img.at<Vec3b>(j ,i).val[1];
+									int p1cr=img.at<Vec3b>(j ,i+1).val[1];
+									int p1dl=img.at<Vec3b>(j+1 ,i-1).val[1];
+									int p1dc=img.at<Vec3b>(j+1 ,i).val[1];
+									int p1dr=img.at<Vec3b>(j+1 ,i+1).val[1];
+									int uno=(p1ul+p1uc+p1ur+p1cl+p1cc+p1cr+p1dl+p1dc+p1dr)/9;
 
-								int p2ul=img.at<Vec3b>(j-1 ,i-1).val[2];
-								int p2uc=img.at<Vec3b>(j-1 ,i).val[2];
-								int p2ur=img.at<Vec3b>(j-1 ,i+1).val[2];
-								int p2cl=img.at<Vec3b>(j ,i-1).val[2];
-								int p2cc=img.at<Vec3b>(j ,i).val[2];
-								int p2cr=img.at<Vec3b>(j ,i+1).val[2];
-								int p2dl=img.at<Vec3b>(j+1 ,i-1).val[2];
-								int p2dc=img.at<Vec3b>(j+1 ,i).val[2];
-								int p2dr=img.at<Vec3b>(j+1 ,i+1).val[2];
-								int dos=(p2ul+p2uc+p2ur+p2cl+p2cc+p2cr+p2dl+p2dc+p2dr)/9;
-														
-								img.at<Vec3b>(j ,i).val[0]=cero;
-								img.at<Vec3b>(j ,i).val[1]=uno;
-								img.at<Vec3b>(j ,i).val[2]=dos;
-															
+									int p2ul=img.at<Vec3b>(j-1 ,i-1).val[2];
+									int p2uc=img.at<Vec3b>(j-1 ,i).val[2];
+									int p2ur=img.at<Vec3b>(j-1 ,i+1).val[2];
+									int p2cl=img.at<Vec3b>(j ,i-1).val[2];
+									int p2cc=img.at<Vec3b>(j ,i).val[2];
+									int p2cr=img.at<Vec3b>(j ,i+1).val[2];
+									int p2dl=img.at<Vec3b>(j+1 ,i-1).val[2];
+									int p2dc=img.at<Vec3b>(j+1 ,i).val[2];
+									int p2dr=img.at<Vec3b>(j+1 ,i+1).val[2];
+									int dos=(p2ul+p2uc+p2ur+p2cl+p2cc+p2cr+p2dl+p2dc+p2dr)/9;
+																
+									img.at<Vec3b>(j ,i).val[0]=cero;
+									img.at<Vec3b>(j ,i).val[1]=uno;
+									img.at<Vec3b>(j ,i).val[2]=dos;
+																	
+								}
 							} 
+						}
 					}
 				}
 				 
