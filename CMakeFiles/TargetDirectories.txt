@@ -1,0 +1,3 @@
+/home/nathalia/Documentos/paralela/Faceblurr/CMakeFiles/faceblur.dir
+/home/nathalia/Documentos/paralela/Faceblurr/CMakeFiles/edit_cache.dir
+/home/nathalia/Documentos/paralela/Faceblurr/CMakeFiles/rebuild_cache.dir
